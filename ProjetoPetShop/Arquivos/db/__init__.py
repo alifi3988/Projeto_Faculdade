@@ -1,0 +1,1 @@
+#  __init__.py, o Python não identifica a pasta como um pacote válido.

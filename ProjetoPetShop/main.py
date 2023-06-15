@@ -1,11 +1,15 @@
 # função principal da aplicação
-from Arquivos.views import menuPrincipal
 
+from Arquivos.db.conexaoDB import criacaoBD
+from Arquivos.db.petsDB import criacaoTablePets
+from Arquivos.views.menuPrincipal import menuPrincipal
 
-def main():
-    
+def principal():
+    # criação incial do banco de dados
+    criacaoBD()
+    criacaoTablePets()
     menuPrincipal()
     
 
 if __name__ == "__main__":
-    main()
+    principal()

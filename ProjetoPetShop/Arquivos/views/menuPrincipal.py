@@ -5,10 +5,53 @@ import time
 
 from click import pause
 
-from Arquivos.db.conexaoDB import criacaoBD
+
 from Arquivos.db.petsDB import insercaoDadosPets, recuperacaoDadosTodos, recuperarDadosEspecificos
 
+# criação das das funções com as 'telas'
+def menuPrincipal():
 
+    while True:
+        os.system("cls")
+        print("=+"*35)
+        print("* * * M E N U  P R I N C I P A L * * *")
+        print("=+"*35)
+        print("[1] - Adicionar Pet")
+        print("[2] - Relatório de Pet")
+        print("[3] - Relatório de Pet por Espécie")
+        print("[4] - Exportar Dados")
+        print("[0] - Sair")
+        print("-"*35)
+        while True:
+            resposta = int(input("Informe a resposta: "))
+            if resposta < 0 or resposta > 4:
+                print("Erro na resposta informada! Tente novamente!")
+                time.sleep(3)
+            else:
+                break
+        
+        if resposta == 1:
+            # adicionando PET
+            adicionarPet()
+            
+        elif resposta == 2:
+            # realizando o relatório total
+            relatorioPet()
+            
+        elif resposta == 3:
+            # realizando o relatório por espécie
+            relatorioPetEspecie()
+            
+        elif resposta == 4:
+            # realizando a expostação de dados
+            exportarDadosBD()
+            
+        elif resposta == 0:
+            # saindo do sistema
+            os.system("cls")
+            print("Saindo do sistema...")
+            time.sleep(3)
+            exit()
 
 # REALIZANDO A INSERÇÃO DE PETS
 def adicionarPet():
@@ -145,7 +188,7 @@ def criarDiretorioProjetoJson():
         
         return True
     except:
-        print("Erro: menuAdministrativo.py/criarDiretorioProjeto()")
+        print("Erro: menu/criarDiretorioProjeto()")
         time.sleep(3)
         return False
 
@@ -160,32 +203,32 @@ def exportarDadosBD():
 # criação do JSON 
 def criacaoJSON():
     criarDiretorioProjetoJson() # criação dos diretórios
-    petsJSON = {'PETS CÃES': [], 'PETS GATOS':[]}
+    petsJSON = {'PETS CAES': [], 'PETS GATOS':[]}
      
     recuperacaoCaes = recuperarDadosEspecificos('Cão')
     recuperacaoGatos = recuperarDadosEspecificos('Gato')
      
-    if recuperacaoCaes != False and recuperacaoGatos != False:
+    if recuperacaoCaes != False:
          
         for i in recuperacaoCaes:
-             petsJSON['PETS CÃES'].append(
+             petsJSON['PETS CAES'].append(
                  {
                      'ID':i[0],
                      'Nome': i[1],
                      'Especie': i[2],
-                     'Raça':i[3],
+                     'Raca':i[3],
                      'Data nascimento':i[4],
                      'Sexo':i[5]
                  }
              )
-             
+    if recuperacaoGatos != False:
         for i in recuperacaoGatos:
              petsJSON['PETS GATOS'].append(
                  {
                      'ID':i[0],
                      'Nome': i[1],
                      'Especie': i[2],
-                     'Raça':i[3],
+                     'Raca':i[3],
                      'Data nascimento':i[4],
                      'Sexo':i[5]
                  }
@@ -207,49 +250,3 @@ def criacaoJSON():
         print("Houve erro! Verifique! [menu/importarJSON()]")
         time.sleep(3)
 
-# criação das das funções com as 'telas'
-def menuPrincipal():
-    
-    # criação incial do banco de dados
-    criacaoBD()
-    
-    while True:
-        os.system("cls")
-        print("=+"*35)
-        print("* * * M E N U  P R I N C I P A L * * *")
-        print("=+"*35)
-        print("[1] - Adicionar Pet")
-        print("[2] - Relatório de Pet")
-        print("[3] - Relatório de Pet por Espécie")
-        print("[4] - Exportar Dados")
-        print("[0] - Sair")
-        print("-"*35)
-        while True:
-            resposta = int(input("Informe a resposta: "))
-            if resposta < 0 or resposta > 4:
-                print("Erro na resposta informada! Tente novamente!")
-                time.sleep(3)
-            else:
-                break
-        
-        if resposta == 1:
-            # adicionando PET
-            adicionarPet()
-            
-        elif resposta == 2:
-            # realizando o relatório total
-            relatorioPet()
-            
-        elif resposta == 3:
-            # realizando o relatório por espécie
-            relatorioPetEspecie()
-            
-        elif resposta == 4:
-            # realizando a expostação de dados
-            exportarDadosBD()
-            
-        elif resposta == 0:
-            # saindo do sistema
-            os.system("Saindo do sistema...")
-            time.sleep(3)
-            exit()
